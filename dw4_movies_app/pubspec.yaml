@@ -11,6 +11,10 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
+  get: ^4.6.5
+  flutter_dotenv: ^5.0.2
+  intl: ^0.18.0
+  flutter_rating_stars: ^1.0.3+4
 
 dev_dependencies:
   flutter_test:
@@ -20,3 +24,19 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/images/
+    - .env
+
+  fonts:
+    - family: FilmesAppIcons
+      fonts:
+        - asset: assets/fonts/FilmesAppIcons.ttf
+
+    - family: Metropolis
+      fonts:
+        - asset: assets/fonts/metropolis/Metropolis-Regular.otf
+        - asset: assets/fonts/metropolis/Metropolis-SemiBold.otf
+          weight: 600
+        - asset: assets/fonts/metropolis/Metropolis-Bold.otf
