@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:dw4_movies_app/application/ui/loader/loader_mixin.dart';
-import 'package:dw4_movies_app/application/ui/messages/messages_mixin.dart';
+import 'package:dw4_movies_app/application/mixins/loader_mixin.dart';
+import 'package:dw4_movies_app/application/mixins/messages_mixin.dart';
 import 'package:dw4_movies_app/models/movie_detail_model.dart';
 import 'package:dw4_movies_app/services/movies/movies_service.dart';
 import 'package:get/get.dart';

@@ -23,19 +23,22 @@ class FavoritesController extends GetxController {
   }
 
   Future<void> _getFavorites() async {
-    var user = _authService.auth;
+    var user = _authService; // var user = _authService.auth;
     if (user != null) {
-      var favorites =
-          await _moviesService.getFavoritesMovies(user.id.toString());
+      var favorites = await _moviesService.getFavoritesMovies(
+          '1'); // await _moviesService.getFavoritesMovies(user.id.toString());
       movies.assignAll(favorites);
     }
   }
 
   Future<void> removeFavorite(MovieModel movie) async {
-    var user = _authService.auth;
+    var user = _authService; // var user = _authService.auth;
     if (user != null) {
       await _moviesService.addOrRemoveFavorite(
-          user.id.toString(), movie.copyWith(favorite: false));
+          '1',
+          movie.copyWith(
+              favorite:
+                  false)); // user.id.toString(), movie.copyWith(favorite: false));
       movies.remove(movie);
     }
   }

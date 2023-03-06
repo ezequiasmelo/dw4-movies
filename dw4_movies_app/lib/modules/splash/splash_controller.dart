@@ -5,7 +5,7 @@ class SplashController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    // Get.offAllNamed('/login');
-    Get.offAllNamed('/home');
+    Get.offAllNamed('/auth/register');
+    // Get.offAllNamed('auth/home');
   }
 }

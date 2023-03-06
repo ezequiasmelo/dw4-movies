@@ -2,18 +2,18 @@ import 'dart:developer';
 
 import 'package:get/get.dart';
 
-import 'package:dw4_movies_app/application/ui/loader/loader_mixin.dart';
-import 'package:dw4_movies_app/application/ui/messages/messages_mixin.dart';
-import 'package:dw4_movies_app/services/login/login_service.dart';
+import 'package:dw4_movies_app/application/mixins/loader_mixin.dart';
+import 'package:dw4_movies_app/application/mixins/messages_mixin.dart';
+import 'package:dw4_movies_app/services/auth/auth_service.dart';
 
 class LoginController extends GetxController with LoaderMixin, MessagesMixin {
-  final LoginService _loginService;
+  final IAuthService _authService;
   final loading = false.obs;
   final message = Rxn<MessageModel>();
 
   LoginController({
-    required LoginService loginService,
-  }) : _loginService = loginService;
+    required IAuthService authService,
+  }) : _authService = authService;
 
   @override
   void onInit() {
@@ -25,7 +25,7 @@ class LoginController extends GetxController with LoaderMixin, MessagesMixin {
   Future<void> login() async {
     try {
       loading(true);
-      await _loginService.login();
+      await _authService.login('', '');
       loading(false);
       message(MessageModel.info(
           title: 'Sucesso', message: 'Login realizado com sucesso'));

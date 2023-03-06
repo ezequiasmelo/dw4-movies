@@ -1,8 +1,9 @@
 import 'package:dw4_movies_app/application/bindings/application_bindings.dart';
 import 'package:dw4_movies_app/application/config/env/env.dart';
 import 'package:dw4_movies_app/application/ui/filmes_app_ui_config.dart';
+import 'package:dw4_movies_app/modules/auth/register/register_module.dart';
 import 'package:dw4_movies_app/modules/home/home_module.dart';
-import 'package:dw4_movies_app/modules/login/login_module.dart';
+import 'package:dw4_movies_app/modules/auth/login/login_module.dart';
 import 'package:dw4_movies_app/modules/movie_detail/movie_detail_module.dart';
 import 'package:dw4_movies_app/modules/splash/splash_module.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
       getPages: [
         ...SplashModule().routers,
         ...LoginModule().routers,
+        ...RegisterModule().routers,
         ...HomeModule().routers,
         ...MovieDetailModule().routers,
       ],

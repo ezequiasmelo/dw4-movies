@@ -1,4 +1,4 @@
-import 'package:dw4_movies_app/modules/login/login_controller.dart';
+import 'package:dw4_movies_app/modules/auth/login/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -4,6 +4,7 @@ import '../config/env/env.dart';
 
 class RestClient extends GetConnect {
   RestClient() {
-    httpClient.baseUrl = Env.i['api_url_themoviedb'] ?? '';
+    httpClient.baseUrl = Env.i['backend_base_url'] ??
+        ''; // httpClient.baseUrl = Env.i['api_url_themoviedb'] ?? '';
   }
 }

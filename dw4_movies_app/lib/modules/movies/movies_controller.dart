@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:dw4_movies_app/application/auth/auth_service.dart';
-import 'package:dw4_movies_app/application/ui/messages/messages_mixin.dart';
+import 'package:dw4_movies_app/application/mixins/messages_mixin.dart';
 import 'package:dw4_movies_app/models/genre_model.dart';
 import 'package:dw4_movies_app/models/movie_model.dart';
 import 'package:dw4_movies_app/services/genres/genres_service.dart';
@@ -133,15 +133,15 @@ class MoviesController extends GetxController with MessagesMixin {
   }
 
   Future<void> favoriteMovies(MovieModel movie) async {
-    final user = _authService.auth;
+    final user = _authService; // final user = _authService.auth;
     if (user != null) {}
   }
 
   Future<Map<int, MovieModel>> getFavorites() async {
-    var user = _authService.auth;
+    var user = _authService; // var user = _authService.auth;
     if (user != null) {
-      final favorites =
-          await _moviesService.getFavoritesMovies(user.id.toString());
+      final favorites = await _moviesService.getFavoritesMovies(
+          '1'); // await _moviesService.getFavoritesMovies(user.id.toString());
       return <int, MovieModel>{
         for (var fav in favorites) fav.id: fav,
       };

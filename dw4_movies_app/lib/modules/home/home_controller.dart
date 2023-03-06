@@ -1,14 +1,14 @@
-import 'package:dw4_movies_app/services/login/login_service.dart';
+import 'package:dw4_movies_app/services/auth/auth_service.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   static const NAVIGATOR_KEY = 1;
   static const INDEX_PAGE_EXIT = 2;
-  final LoginService _loginService;
+  final IAuthService _authService;
 
   HomeController({
-    required LoginService loginService,
-  }) : _loginService = loginService;
+    required IAuthService authService,
+  }) : _authService = authService;
 
   final pages = ['/movies', '/favorites'];
 
@@ -19,7 +19,7 @@ class HomeController extends GetxController {
   void goToPage(int page) {
     _pageIndex(page);
     if (page == INDEX_PAGE_EXIT) {
-      _loginService.logout();
+      _authService.logout();
     } else {
       Get.offNamed(pages[page], id: NAVIGATOR_KEY);
     }
