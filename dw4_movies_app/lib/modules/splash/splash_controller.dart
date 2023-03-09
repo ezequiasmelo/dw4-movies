@@ -1,11 +1,10 @@
+import 'package:dw4_movies_app/application/services/auth_service.dart';
 import 'package:get/get.dart';
 
 class SplashController extends GetxController {
-  // TODO: pode remover isso se no auth_service estiver funcionando
   @override
   void onReady() {
     super.onReady();
-    Get.offAllNamed('/auth/register');
-    // Get.offAllNamed('auth/home');
+    Get.putAsync(() => AuthService().init());
   }
 }

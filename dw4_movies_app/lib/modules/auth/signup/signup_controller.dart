@@ -4,18 +4,20 @@ import 'package:dw4_movies_app/application/mixins/loader_mixin.dart';
 import 'package:dw4_movies_app/application/mixins/messages_mixin.dart';
 import 'package:dw4_movies_app/repositories/auth/auth_repository.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
+import '../../../application/constants/app_constants.dart';
 import '../../../application/exceptions/rest_client_exception.dart';
 
-class RegisterController extends GetxController
-    with LoaderMixin, MessagesMixin {
+class SignUpController extends GetxController with LoaderMixin, MessagesMixin {
   final AuthRepository _authRepository;
 
   final _isLoading = false.obs;
   final _message = Rxn<MessageModel>();
+
   final formValid = false.obs;
 
-  RegisterController({
+  SignUpController({
     required AuthRepository authRepository,
   }) : _authRepository = authRepository;
 
@@ -33,13 +35,11 @@ class RegisterController extends GetxController
   }) async {
     try {
       _isLoading.toggle();
-      final user = await _authRepository.register(name, email, password);
+      final userLogged = await _authRepository.register(name, email, password);
       _isLoading.toggle();
 
-      // final storage = GetStorage();
-      // storage.write(AppConstants.USER_KEY, user.id);
-
-      Get.back();
+      final storage = GetStorage();
+      storage.write(AppConstants.USER_KEY, userLogged.id);
     } on RestClientException catch (e, s) {
       _isLoading.toggle();
 

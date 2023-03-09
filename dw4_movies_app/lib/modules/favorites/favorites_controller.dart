@@ -1,7 +1,7 @@
 import 'package:dw4_movies_app/models/movie_model.dart';
 import 'package:get/get.dart';
 
-import 'package:dw4_movies_app/application/auth/auth_service.dart';
+import 'package:dw4_movies_app/application/services/auth_service.dart';
 import 'package:dw4_movies_app/services/movies/movies_service.dart';
 
 class FavoritesController extends GetxController {

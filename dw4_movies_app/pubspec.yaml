@@ -17,6 +17,7 @@ dependencies:
   flutter_rating_stars: ^1.0.3+4
   transparent_image: ^2.0.1
   validatorless: ^1.2.3
+  get_storage: ^2.1.1
 
 dev_dependencies:
   flutter_test:

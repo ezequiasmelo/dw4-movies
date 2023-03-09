@@ -10,18 +10,19 @@ class MovieDetailController extends GetxController
     with LoaderMixin, MessagesMixin {
   final MoviesService _moviesService;
 
-  var loading = false.obs;
-  var message = Rxn<MessageModel>();
+  var _loading = false.obs;
+  var _message = Rxn<MessageModel>();
   var movie = Rxn<MovieDetailModel>();
 
-  MovieDetailController({required MoviesService moviesService})
-      : _moviesService = moviesService;
+  MovieDetailController({
+    required MoviesService moviesService,
+  }) : _moviesService = moviesService;
 
   @override
   void onInit() {
     super.onInit();
-    loaderListener(loading);
-    messageListener(message);
+    loaderListener(_loading);
+    messageListener(_message);
   }
 
   @override
@@ -29,13 +30,13 @@ class MovieDetailController extends GetxController
     super.onReady();
     try {
       final movieId = Get.arguments;
-      loading(true);
+      _loading(true);
       final movieDetailData = await _moviesService.getDetail(movieId);
       movie(movieDetailData);
-      loading(false);
+      _loading(false);
     } catch (e, s) {
       log('Erro ao buscar detalhe do filme', error: e, stackTrace: s);
-      message(
+      _message(
         MessageModel.error(
             title: 'Erro', message: 'Erro ao buscar detalhe do filme'),
       );

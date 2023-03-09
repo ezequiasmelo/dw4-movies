@@ -1,14 +1,14 @@
 import 'package:dw4_movies_app/application/ui/theme_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
-import 'package:intl/intl.dart';
 
 import 'package:dw4_movies_app/application/ui/filmes_app_icons_icons.dart';
 import 'package:dw4_movies_app/models/movie_model.dart';
 import 'package:transparent_image/transparent_image.dart';
 
+import '../../utils/formatter_utils.dart';
+
 class MovieCard extends StatelessWidget {
-  final dateFormat = DateFormat('y');
   final MovieModel movie;
   final VoidCallback favoriteCallback;
 
@@ -65,9 +65,7 @@ class MovieCard extends StatelessWidget {
                   maxLines: 2,
                 ),
                 Text(
-                  dateFormat.format(
-                    DateTime.parse(movie.releaseDate),
-                  ),
+                  FormatterUtils.formatDate(movie.releaseDate, 'y'),
                   style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w300,

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
-import 'package:dw4_movies_app/application/auth/auth_service.dart';
+import 'package:dw4_movies_app/application/mixins/loader_mixin.dart';
+import 'package:dw4_movies_app/application/services/auth_service.dart';
 import 'package:dw4_movies_app/application/mixins/messages_mixin.dart';
 import 'package:dw4_movies_app/models/genre_model.dart';
 import 'package:dw4_movies_app/models/movie_model.dart';
@@ -8,10 +9,12 @@ import 'package:dw4_movies_app/services/genres/genres_service.dart';
 import 'package:dw4_movies_app/services/movies/movies_service.dart';
 import 'package:get/get.dart';
 
-class MoviesController extends GetxController with MessagesMixin {
+class MoviesController extends GetxController with LoaderMixin, MessagesMixin {
   final GenresService _genresService;
   final MoviesService _moviesService;
   final AuthService _authService;
+
+  final _isLoading = false.obs;
   final _message = Rxn<MessageModel>();
   final genres = <GenreModel>[].obs;
 
@@ -34,17 +37,22 @@ class MoviesController extends GetxController with MessagesMixin {
   @override
   void onInit() {
     super.onInit();
+    loaderListener(_isLoading);
     messageListener(_message);
   }
 
   @override
   Future<void> onReady() async {
     super.onReady();
+    getGenres();
+  }
+
+  Future<void> getGenres() async {
     try {
       final genresData = await _genresService.getGenres();
       genres.assignAll(genresData);
 
-      await getMovies();
+      await getMovies(showLoader: true);
     } catch (e, s) {
       log('Erro ao carregar dados da pagina', error: e, stackTrace: s);
       _message(
@@ -54,8 +62,10 @@ class MoviesController extends GetxController with MessagesMixin {
     }
   }
 
-  Future<void> getMovies() async {
+  Future<void> getMovies({bool showLoader = false}) async {
     try {
+      if (showLoader) _isLoading.toggle();
+
       var popularMoviesData = await _moviesService.getPopularMovies();
       var topRatedMoviesData = await _moviesService.getTopRatedMovies();
       final favorites = await getFavorites();
@@ -81,6 +91,8 @@ class MoviesController extends GetxController with MessagesMixin {
 
       topRatedMovies.assignAll(topRatedMoviesData);
       _topRatedMoviesOriginal = topRatedMoviesData;
+
+      if (showLoader) _isLoading.toggle();
     } catch (e, s) {
       log('Erro ao carregar dados da pagina', error: e, stackTrace: s);
       _message(

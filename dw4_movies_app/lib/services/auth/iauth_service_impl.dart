@@ -1,12 +1,12 @@
 import 'package:dw4_movies_app/repositories/auth/auth_repository.dart';
 
 import '../../models/user_model.dart';
-import './auth_service.dart';
+import 'iauth_service.dart';
 
-class AuthServiceImpl implements IAuthService {
+class IAuthServiceImpl implements IAuthService {
   final AuthRepository _authRepository;
 
-  AuthServiceImpl({
+  IAuthServiceImpl({
     required AuthRepository authRepository,
   }) : _authRepository = authRepository;
 

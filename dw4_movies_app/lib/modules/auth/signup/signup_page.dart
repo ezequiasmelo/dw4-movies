@@ -1,4 +1,4 @@
-import 'package:dw4_movies_app/modules/auth/register/register_controller.dart';
+import 'package:dw4_movies_app/modules/auth/signup/signup_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:validatorless/validatorless.dart';
@@ -7,19 +7,27 @@ import '../../../application/ui/page_state.dart';
 import '../../../application/ui/widgets/app_button_widget.dart';
 import '../../../application/ui/widgets/text_field_widget.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({Key? key}) : super(key: key);
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _RegisterPageState extends PageState<RegisterPage, RegisterController> {
+class _SignUpPageState extends PageState<SignUpPage, SignUpController> {
   final _formKey = GlobalKey<FormState>();
 
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   _signUp() {
     _formKey.currentState!.save();
@@ -44,7 +52,7 @@ class _RegisterPageState extends PageState<RegisterPage, RegisterController> {
           key: _formKey,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           onChanged: () {
-            // controller.formValid(_formKey.currentState!.validate());
+            controller.formValid(_formKey.currentState!.validate());
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

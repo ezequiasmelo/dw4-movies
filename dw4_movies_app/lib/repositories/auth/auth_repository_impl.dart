@@ -2,7 +2,9 @@ import 'dart:developer';
 
 import 'package:dw4_movies_app/application/exceptions/user_not_found_exception.dart';
 import 'package:dw4_movies_app/application/rest_client/rest_client.dart';
+import 'package:dw4_movies_app/application/services/auth_service.dart';
 import 'package:dw4_movies_app/models/user_model.dart';
+import 'package:get/get.dart';
 
 import '../../application/exceptions/rest_client_exception.dart';
 import './auth_repository.dart';
@@ -10,12 +12,13 @@ import './auth_repository.dart';
 class AuthRepositoryImpl implements AuthRepository {
   final RestClient _restClient;
 
-  AuthRepositoryImpl({required RestClient restClient})
-      : _restClient = restClient;
+  AuthRepositoryImpl({
+    required RestClient restClient,
+  }) : _restClient = restClient;
 
   @override
   Future<UserModel> login(String email, String password) async {
-    final result = await _restClient.post('/auth', {
+    final result = await _restClient.post('/auth/', {
       'email': email,
       'password': password,
     });
@@ -31,7 +34,7 @@ class AuthRepositoryImpl implements AuthRepository {
       }
 
       log(
-        'Erro ao autenticar usuário (${result.statusCode})',
+        'Erro ao autenticar usuário (${result.statusCode}, ${_restClient.baseUrl})',
         error: result.statusText,
         stackTrace: StackTrace.current,
       );
@@ -64,6 +67,6 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> logout() async {
-    log('logout');
+    Get.find<AuthService>().logout();
   }
 }
