@@ -1,5 +1,5 @@
-import 'package:dw4_movies_app/repositories/profile/profile_repository.dart';
-
+import '../../models/user_model.dart';
+import '../../repositories/profile/profile_repository.dart';
 import './profile_service.dart';
 
 class ProfileServiceImpl implements ProfileService {
@@ -8,6 +8,9 @@ class ProfileServiceImpl implements ProfileService {
   ProfileServiceImpl({
     required ProfileRepository profileRepository,
   }) : _profileRepository = profileRepository;
+
+  @override
+  Future<UserModel> getProfile() => _profileRepository.getProfile();
 
   @override
   Future<void> updateNameProfile(String name) =>

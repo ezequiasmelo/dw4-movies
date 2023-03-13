@@ -40,11 +40,14 @@ class _SignUpPageState extends PageState<SignUpPage, SignUpController> {
 
   @override
   Widget build(BuildContext context) {
-    final divider = SizedBox(height: context.widthTransformer(reducedBy: 90.0));
+    final divider = SizedBox(height: context.widthTransformer(reducedBy: 95.0));
     // final appTheme = Get.find<AppThemeInterface>();
 
     return Scaffold(
       // appBar: AppBarWidget(),
+      appBar: AppBar(
+        title: Text('Cadastro'),
+      ),
       // backgroundColor: appTheme.colors.background,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -57,10 +60,11 @@ class _SignUpPageState extends PageState<SignUpPage, SignUpController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Cadastro',
-                // style: appTheme.textStyles.heading2,
-              ),
+              // Text(
+              //   'Cadastro',
+              //   // style: appTheme.textStyles.heading2,
+              // ),
+              divider,
               const Text(
                 'Preencha os campos abaixo para criar o seu cadastro.',
               ),

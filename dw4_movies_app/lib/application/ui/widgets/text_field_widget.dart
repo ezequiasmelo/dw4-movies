@@ -23,10 +23,11 @@ class TextFieldWidget extends StatelessWidget {
     // final appTheme = Get.find<AppThemeInterface>();
 
     final fieldBorder = OutlineInputBorder(
-        borderRadius: BorderRadius.circular(23.0),
-        borderSide: BorderSide(
-            // color: appTheme.colors.border,
-            ));
+      borderRadius: BorderRadius.circular(23.0),
+      borderSide: BorderSide(
+          // color: appTheme.colors.border,
+          ),
+    );
 
     return TextFormField(
       controller: controller,

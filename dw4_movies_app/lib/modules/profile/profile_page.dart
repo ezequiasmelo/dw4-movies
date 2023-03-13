@@ -11,8 +11,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends PageState<ProfilePage, ProfileController> {
-  final _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     final divider = SizedBox(height: context.widthTransformer(reducedBy: 95.0));
@@ -21,33 +19,32 @@ class _ProfilePageState extends PageState<ProfilePage, ProfileController> {
       appBar: AppBar(
         title: const Text('Perfil'),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Icon(
-                  Icons.account_circle_rounded,
-                  color: Colors.grey[400],
-                  size: 80,
-                ),
-              ),
-              divider,
-              Text('Informação pessoal'),
-              divider,
-              // TextFieldWidget(
-              //   label: 'Nome',
-              // ),
-              // divider,
-              // TextFieldWidget(
-              //   label: 'Email',
-              // )
-            ],
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                divider,
+                Text('Dados pessoais'),
+              ],
+            ),
           ),
-        ),
+          ListTile(
+            title: Text('Nome'),
+            subtitle: Text('Ezequias'),
+            trailing: Icon(Icons.navigate_next),
+            onTap: () {},
+          ),
+          ListTile(
+            title: Text('Email'),
+            subtitle: Text('ezequias@email.com'),
+            trailing: Icon(Icons.navigate_next),
+            onTap: () {},
+          ),
+        ],
       ),
     );
   }

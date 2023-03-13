@@ -1,11 +1,10 @@
 import 'dart:developer';
 
-import 'package:dw4_movies_app/application/exceptions/rest_client_exception.dart';
-import 'package:dw4_movies_app/application/rest_client/rest_client_themoviedb.dart';
-import 'package:dw4_movies_app/models/movie_detail_model.dart';
-import 'package:dw4_movies_app/models/movie_model.dart';
-
 import '../../application/config/env/env.dart';
+import '../../application/exceptions/rest_client_exception.dart';
+import '../../application/rest_client/rest_client_themoviedb.dart';
+import '../../models/movie_detail_model.dart';
+import '../../models/movie_model.dart';
 import './movies_repository.dart';
 
 class MoviesRepositoryImpl implements MoviesRepository {
@@ -17,69 +16,54 @@ class MoviesRepositoryImpl implements MoviesRepository {
 
   @override
   Future<List<MovieModel>> getPopularMovies() async {
-    final result = await _restClientTheMovieDB.get<List<MovieModel>>(
-      '/movie/popular',
-      query: {
-        'api_key': Env.i['api_key_themoviedb'] ?? '',
-        'language': 'pt-br',
-        'page': '1',
-      },
-      decoder: (data) {
-        final results = data['results'];
-        if (results != null) {
-          return results.map<MovieModel>((v) => MovieModel.fromMap(v)).toList();
-        }
-
-        return <MovieModel>[];
-      },
-    );
+    final result = await _restClientTheMovieDB.get('/movie/popular', query: {
+      'api_key': Env.i['api_key_themoviedb'] ?? '',
+      'language': 'pt-br',
+      'page': '1',
+    });
 
     if (result.hasError) {
       log(
-        'Erro ao buscar popular movies (${result.statusText})',
+        'Erro ao buscar popular movies (${result.statusCode})',
         error: result.statusText,
         stackTrace: StackTrace.current,
       );
       throw RestClientException('Erro ao buscar popular movies');
     }
 
-    return result.body ?? <MovieModel>[];
+    return result.body['results']
+        .map<MovieModel>((v) => MovieModel.fromMap(v))
+        .toList();
   }
 
   @override
   Future<List<MovieModel>> getTopRatedMovies() async {
-    final result = await _restClientTheMovieDB.get<List<MovieModel>>(
+    final result = await _restClientTheMovieDB.get(
       '/movie/top_rated',
       query: {
         'api_key': Env.i['api_key_themoviedb'] ?? '',
         'language': 'pt-br',
         'page': '1',
       },
-      decoder: (data) {
-        final results = data['results'];
-        if (results != null) {
-          return results.map<MovieModel>((v) => MovieModel.fromMap(v)).toList();
-        }
-
-        return <MovieModel>[];
-      },
     );
 
     if (result.hasError) {
       log(
-        'Erro ao buscar popular movies (${result.statusText})',
+        'Erro ao buscar popular movies (${result.statusCode})',
         error: result.statusText,
         stackTrace: StackTrace.current,
       );
       throw RestClientException('Erro ao buscar popular movies');
     }
 
-    return result.body ?? <MovieModel>[];
+    return result.body['results']
+        .map<MovieModel>((v) => MovieModel.fromMap(v))
+        .toList();
   }
 
   @override
   Future<MovieDetailModel?> getDetail(int id) async {
-    final result = await _restClientTheMovieDB.get<MovieDetailModel?>(
+    final result = await _restClientTheMovieDB.get(
       '/movie/$id',
       query: {
         'api_key': Env.i['api_key_themoviedb'] ?? '',
@@ -87,21 +71,18 @@ class MoviesRepositoryImpl implements MoviesRepository {
         'append_to_response': 'images,credits',
         'include_image_language': 'en,pt-br',
       },
-      decoder: (data) {
-        return MovieDetailModel.fromMap(data);
-      },
     );
 
     if (result.hasError) {
       log(
-        'Erro ao buscar detalhes do filme (${result.statusText})',
+        'Erro ao buscar detalhes do filme (${result.statusCode})',
         error: result.statusText,
         stackTrace: StackTrace.current,
       );
       throw RestClientException('Erro ao buscar detalhes do filme');
     }
 
-    return result.body;
+    return MovieDetailModel.fromMap(result.body);
   }
 
   @override

@@ -36,11 +36,14 @@ class _LoginPageState extends PageState<LoginPage, LoginController> {
 
   @override
   Widget build(BuildContext context) {
-    final divider = SizedBox(height: context.widthTransformer(reducedBy: 90.0));
+    final divider = SizedBox(height: context.widthTransformer(reducedBy: 95.0));
     // final appTheme = Get.find<AppThemeInterface>();
 
     return Scaffold(
       // appBar: AppBarWidget(),
+      appBar: AppBar(
+        title: Text('Login'),
+      ),
       // backgroundColor: appTheme.colors.background,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -56,10 +59,10 @@ class _LoginPageState extends PageState<LoginPage, LoginController> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Login',
-                    // style: appTheme.textStyles.heading2
-                  ),
+                  // Text(
+                  //   'Login',
+                  //   // style: appTheme.textStyles.heading2
+                  // ),
                   divider,
                   TextFieldWidget(
                     label: 'E-mail',
@@ -76,8 +79,8 @@ class _LoginPageState extends PageState<LoginPage, LoginController> {
                     controller: _passwordController,
                     validator: Validatorless.multiple([
                       Validatorless.required('A senha é obrigatória'),
-                      Validatorless.min(
-                          6, 'A senha deve conter pelo menos 6 caracteres')
+                      // Validatorless.min(
+                      //     6, 'A senha deve conter pelo menos 6 caracteres')
                     ]),
                   ),
                   divider,

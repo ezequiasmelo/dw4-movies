@@ -2,15 +2,14 @@ import 'dart:developer';
 
 import 'package:dw4_movies_app/application/mixins/loader_mixin.dart';
 import 'package:dw4_movies_app/application/mixins/messages_mixin.dart';
-import 'package:dw4_movies_app/repositories/auth/auth_repository.dart';
+import 'package:dw4_movies_app/services/auth/iauth_service.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
-import '../../../application/constants/app_constants.dart';
+import '../../../application/config/jwt/jwt_decode_payload.dart';
 import '../../../application/exceptions/rest_client_exception.dart';
 
 class SignUpController extends GetxController with LoaderMixin, MessagesMixin {
-  final AuthRepository _authRepository;
+  final IAuthService _iAuthService;
 
   final _isLoading = false.obs;
   final _message = Rxn<MessageModel>();
@@ -18,8 +17,8 @@ class SignUpController extends GetxController with LoaderMixin, MessagesMixin {
   final formValid = false.obs;
 
   SignUpController({
-    required AuthRepository authRepository,
-  }) : _authRepository = authRepository;
+    required IAuthService iauthService,
+  }) : _iAuthService = iauthService;
 
   @override
   void onInit() {
@@ -35,11 +34,16 @@ class SignUpController extends GetxController with LoaderMixin, MessagesMixin {
   }) async {
     try {
       _isLoading.toggle();
-      final userLogged = await _authRepository.register(name, email, password);
+      final userLogged = await _iAuthService.register(name, email, password);
       _isLoading.toggle();
 
-      final storage = GetStorage();
-      storage.write(AppConstants.USER_KEY, userLogged.id);
+//TODO:
+
+      Map<String, dynamic> decodedTokenPayload =
+          JwtDecodePayload.i.decode(userLogged.accessToken);
+
+      // final storage = GetStorage();
+      // storage.write(AppConstants.USER_KEY, userLogged.id);
     } on RestClientException catch (e, s) {
       _isLoading.toggle();
 

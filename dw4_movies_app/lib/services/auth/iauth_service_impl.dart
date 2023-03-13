@@ -1,6 +1,5 @@
-import 'package:dw4_movies_app/repositories/auth/auth_repository.dart';
-
-import '../../models/user_model.dart';
+import '../../models/tokenization_model.dart';
+import '../../repositories/auth/auth_repository.dart';
 import 'iauth_service.dart';
 
 class IAuthServiceImpl implements IAuthService {
@@ -11,11 +10,12 @@ class IAuthServiceImpl implements IAuthService {
   }) : _authRepository = authRepository;
 
   @override
-  Future<UserModel> login(String email, String password) =>
+  Future<TokenizationModel> login(String email, String password) =>
       _authRepository.login(email, password);
 
   @override
-  Future<UserModel> register(String name, String email, String password) =>
+  Future<TokenizationModel> register(
+          String name, String email, String password) =>
       _authRepository.register(name, email, password);
 
   @override

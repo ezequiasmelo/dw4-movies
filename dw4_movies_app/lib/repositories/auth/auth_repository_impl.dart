@@ -1,9 +1,10 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dw4_movies_app/application/exceptions/user_not_found_exception.dart';
 import 'package:dw4_movies_app/application/rest_client/rest_client.dart';
 import 'package:dw4_movies_app/application/services/auth_service.dart';
-import 'package:dw4_movies_app/models/user_model.dart';
+import 'package:dw4_movies_app/models/tokenization_model.dart';
 import 'package:get/get.dart';
 
 import '../../application/exceptions/rest_client_exception.dart';
@@ -17,11 +18,23 @@ class AuthRepositoryImpl implements AuthRepository {
   }) : _restClient = restClient;
 
   @override
-  Future<UserModel> login(String email, String password) async {
-    final result = await _restClient.post('/auth/', {
-      'email': email,
-      'password': password,
-    });
+  Future<TokenizationModel> login(String email, String password) async {
+    String basicAuth = 'Basic ' +
+        base64Encode(
+          utf8.encode('$email:$password'),
+        );
+
+    final result = await _restClient.post(
+      '/auth/login',
+      // {
+      //   'email': email,
+      //   'password': password,
+      // },
+      {},
+      headers: <String, String>{
+        'authorization': basicAuth,
+      },
+    );
 
     if (result.hasError) {
       if (result.statusCode == 403) {
@@ -41,11 +54,13 @@ class AuthRepositoryImpl implements AuthRepository {
       throw RestClientException('Erro ao autenticar usuário');
     }
 
-    return UserModel.fromMap(result.body);
+    // return UserModel.fromMap(result.body);
+    return TokenizationModel.fromMap(result.body);
   }
 
   @override
-  Future<UserModel> register(String name, String email, String password) async {
+  Future<TokenizationModel> register(
+      String name, String email, String password) async {
     final result = await _restClient.post('/auth/register', {
       'name': name,
       'email': email,

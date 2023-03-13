@@ -12,6 +12,7 @@ class MovieDetailController extends GetxController
 
   var _loading = false.obs;
   var _message = Rxn<MessageModel>();
+
   var movie = Rxn<MovieDetailModel>();
 
   MovieDetailController({
@@ -28,6 +29,10 @@ class MovieDetailController extends GetxController
   @override
   void onReady() async {
     super.onReady();
+    getDetail();
+  }
+
+  Future<void> getDetail() async {
     try {
       final movieId = Get.arguments;
       _loading(true);

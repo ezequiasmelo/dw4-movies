@@ -1,7 +1,6 @@
-import 'package:dw4_movies_app/models/movie_detail_model.dart';
-import 'package:dw4_movies_app/models/movie_model.dart';
-import 'package:dw4_movies_app/repositories/movies/movies_repository.dart';
-
+import '../../models/movie_detail_model.dart';
+import '../../models/movie_model.dart';
+import '../../repositories/movies/movies_repository.dart';
 import 'movies_service.dart';
 
 class MoviesServiceImpl implements MoviesService {
